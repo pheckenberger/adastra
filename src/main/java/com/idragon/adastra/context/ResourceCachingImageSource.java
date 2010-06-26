@@ -55,7 +55,7 @@ public class ResourceCachingImageSource extends ResourceImageSource implements C
 
             Image image = getImageInternal(imageCode, null);
 
-            // Null values are to be cached!
+            // null values are cached too
             log.debug("Caching image: code={}", imageCode);
             defaultCache.put(imageCode, image);
 

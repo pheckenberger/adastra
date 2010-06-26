@@ -5,7 +5,7 @@ import java.awt.Image;
 
 
 /**
- * <p>Image sources can load images from various resources.</p>
+ * Image sources can load images from various resources.
  *
  * @author  iDragon
  */
