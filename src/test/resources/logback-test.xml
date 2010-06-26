@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      		<pattern>%d{ISO8601} %5p [%X{PROCESS}-%X{USER}-%t] %c:%L - %m%n</pattern>
+    	</encoder>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+	<logger name="ch.qos.logback" level="warn" />
+	<logger name="org.springframework" level="warn" />
+	
+</configuration>
