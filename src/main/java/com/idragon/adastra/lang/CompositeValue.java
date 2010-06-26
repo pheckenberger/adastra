@@ -4,17 +4,20 @@ import java.util.Arrays;
 
 
 /**
- * Composite value.
+ * Composite value, which contains an arbitrary count of elements. Very useful in situations, where
+ * maps use ad-hoc keys.
  *
- * @author hp
- *
+ * @author  iDragon
  */
 public class CompositeValue {
 
+    /** Composite value elements */
     private final Object[] elements;
 
     /**
      * Composite value.
+     *
+     * @param  elements  the composite value elements
      */
     public CompositeValue(Object... elements) {
 
@@ -26,7 +29,7 @@ public class CompositeValue {
     }
 
     /**
-     * @return the composite value length
+     * @return  the composite value length
      */
     public int getLength() {
         return elements.length;

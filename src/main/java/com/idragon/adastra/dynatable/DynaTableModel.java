@@ -1,7 +1,8 @@
 package com.idragon.adastra.dynatable;
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.DynaProperty;
+import org.apache.commons.beanutils.LazyDynaBean;
+import org.apache.commons.beanutils.LazyDynaClass;
 
 import java.util.Vector;
 
@@ -19,16 +20,16 @@ public class DynaTableModel extends AbstractTableModel {
     // Serial number
     private static final long serialVersionUID = -5883539238844139403L;
 
-    /** Table properties (columns) */
-    private Vector<DynaProperty> properties = new Vector<DynaProperty>();
+    /** Table bean class (columns) */
+    private LazyDynaClass beanClass = new LazyDynaClass();
 
     /** Table content (rows) */
-    private Vector<DynaBean> beans = new Vector<DynaBean>();
+    private Vector<LazyDynaBean> beans = new Vector<LazyDynaBean>();
 
     /**
      * Dynamic table model.
      */
-    DynaTableModel() {
+    public DynaTableModel() {
     }
 
     /**
@@ -40,16 +41,16 @@ public class DynaTableModel extends AbstractTableModel {
      */
     public DynaBean addBean(int index) {
 
-        // TODO: Bean creation
-        DynaBean bean = null;
-
+        LazyDynaBean bean = new LazyDynaBean(beanClass);
         beans.add(index, bean);
+
+        // TODO: fire model change event
 
         return bean;
     }
 
     @Override public int getColumnCount() {
-        return properties.size();
+        return beanClass.getDynaProperties().length;
     }
 
     @Override public int getRowCount() {
