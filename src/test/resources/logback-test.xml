@@ -12,6 +12,7 @@
 	</root>
 
 	<logger name="ch.qos.logback" level="warn" />
+	<logger name="org.apache.commons" level="warn" />
 	<logger name="org.springframework" level="warn" />
 	
 </configuration>

@@ -10,9 +10,9 @@
 	<description>AdAstra API</description>
 	
 	<properties>
-		<logback.version>0.9.19</logback.version>
+		<logback.version>0.9.22</logback.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>		
-		<slf4j.version>1.5.11</slf4j.version>
+		<slf4j.version>1.6.0</slf4j.version>
 		<spring.version>3.0.2.RELEASE</spring.version>
 	</properties>
 	
@@ -89,6 +89,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
@@ -120,6 +127,12 @@
 			<version>5.11</version>
 			<classifier>jdk15</classifier>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 	
