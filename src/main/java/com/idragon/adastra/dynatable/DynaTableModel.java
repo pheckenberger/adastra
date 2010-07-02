@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.LazyDynaBean;
 import org.apache.commons.beanutils.LazyDynaClass;
+import org.apache.commons.lang.ObjectUtils;
 
 import org.springframework.util.Assert;
 
@@ -22,7 +23,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class DynaTableModel extends AbstractTableModel {
 
-    // Serial number
+    // serial version
     private static final long serialVersionUID = -5883539238844139403L;
 
     /** Table bean class (column container) */
@@ -194,6 +195,48 @@ public class DynaTableModel extends AbstractTableModel {
      */
     public boolean hasProperty(String propertyName) {
         return beanClass.isDynaProperty(propertyName);
+    }
+
+    /**
+     * @param   rowIndex     Row index of the cell to compare.
+     * @param   columnIndex  Column index of the cell to compare.
+     * @param   value        Value.
+     *
+     * @return  whether the given cell contains the given value.
+     *
+     * @throws  IndexOutOfBoundsException  If the given row or column index is out of the valid
+     *                                     range.
+     */
+    public boolean hasValue(int rowIndex, int columnIndex, Object value) {
+
+        checkRowIndex(rowIndex);
+        checkColumnIndex(columnIndex);
+
+        return hasValueUnchecked(beans.get(rowIndex),
+                beanClass.getDynaProperties()[columnIndex].getName(), value);
+    }
+
+    /**
+     * @param   dynaBean      DynaBean to check.
+     * @param   propertyName  Name of the property to check.
+     * @param   value         Value to check.
+     *
+     * @return  whether the given cell contains the given value.
+     */
+    @SuppressWarnings("unchecked")
+    protected boolean hasValueUnchecked(DynaBean dynaBean, String propertyName, Object value) {
+
+        Object oldValue = dynaBean.get(propertyName);
+
+        // comparables are checked separately, because of the BigDecimal equals-like problems
+        // example: when using BigDecimals, 1.0 != 1.000
+
+        if ((oldValue instanceof Comparable) && (value instanceof Comparable)) {
+            return (((Comparable<Object>) oldValue).compareTo(value) == 0);
+        }
+
+        return ObjectUtils.equals(oldValue, value);
+
     }
 
     @Override public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -407,30 +450,28 @@ public class DynaTableModel extends AbstractTableModel {
      * @param   columnIndex  Column index.
      * @param   value        Value.
      *
-     * @throws  IndexOutOfBoundsException  If the given row or column inde is out of the valid
+     * @throws  IndexOutOfBoundsException  If the given row or column index is out of the valid
      *                                     range.
      */
     public void updateValue(int rowIndex, int columnIndex, Object value) {
 
-        checkColumnIndex(columnIndex);
         checkRowIndex(rowIndex);
+        checkColumnIndex(columnIndex);
 
         String propertyName = getColumnNameUnchecked(columnIndex);
         PropertyInstructions propertyInstructions = propertyInstructionsMap.get(propertyName);
 
         if (propertyInstructions.updateable) {
-
-            DynaProperty dynaProperty = beanClass.getDynaProperties()[columnIndex];
             DynaBean dynaBean = beans.get(rowIndex);
 
-            dynaBean.set(dynaProperty.getName(), value);
+            if (!hasValueUnchecked(dynaBean, propertyName, value)) {
+                dynaBean.set(propertyName, value);
 
-            // fire event
-            fireTableCellUpdated(rowIndex, columnIndex);
+                // fire event
+                fireTableCellUpdated(rowIndex, columnIndex);
+            }
         }
     }
-
-    // TODO: Historize
 
     /**
      * Property instructions.
