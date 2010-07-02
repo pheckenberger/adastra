@@ -62,10 +62,10 @@ public abstract class AbstractWorkspace implements Workspace {
     }
 
     /**
-     * Initialize workspace after performing dependency injection.
+     * Initialize workspace after performing dependency injection. If the workspace is already
+     * initialized, nothing happens.
      *
-     * @throws  IllegalArgumentException  if the workspace is already initialized, or the given root
-     *                                    is invalid.
+     * @throws  IllegalArgumentException  if the given root is {@code null} or somehow unusable.
      */
     @PostConstruct public void init() {
 
