@@ -1,4 +1,4 @@
-package com.idragon.adastra.springframework.context;
+package com.idragon.adastra.context;
 
 import com.idragon.adastra.context.SimpleWorkspace;
 
@@ -42,7 +42,7 @@ import java.io.IOException;
         workspace = null;
     }
 
-    @Test public void testWorkspace() throws IOException {
+    public void testWorkspace() throws IOException {
 
         File directory = workspace.getDirectory("aaa", "bbb", "ccc");
         Assert.assertTrue(directory.exists(), "directory does not exist");

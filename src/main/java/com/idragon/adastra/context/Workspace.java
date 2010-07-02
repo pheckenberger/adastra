@@ -5,7 +5,7 @@ import java.io.IOException;
 
 
 /**
- * Workspace interface. Its purpose is to store all application data in a central place on the file
+ * Workspace interface. Its purpose is to store all application data in a central place in the file
  * system.
  *
  * @author  hp

@@ -5,6 +5,8 @@ import org.springframework.util.Assert;
 import java.io.File;
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
+
 
 /**
  * Abstract workspace. This class includes some common workspace logic.
@@ -65,9 +67,12 @@ public abstract class AbstractWorkspace implements Workspace {
      * @throws  IllegalArgumentException  if the workspace is already initialized, or the given root
      *                                    is invalid.
      */
-    public void init() {
+    @PostConstruct public void init() {
 
-        Assert.isTrue(!initialized, "workspace already initialized");
+        if (initialized) {
+            return;
+        }
+
         Assert.notNull(root, "root is null");
 
         if (root.exists()) {
@@ -102,7 +107,8 @@ public abstract class AbstractWorkspace implements Workspace {
      * @return  the file or directory after joining the path sequence. The method does not
      *          guarantee, that the result really exists.
      *
-     * @throws  IllegalArgumentException  if any of the path elements is empty.
+     * @throws  IllegalArgumentException  if the parent is {@code null}, or any of the path elements
+     *                                    is empty.
      */
     protected File joinPathSequence(File parent, String[] pathSequence) {
 

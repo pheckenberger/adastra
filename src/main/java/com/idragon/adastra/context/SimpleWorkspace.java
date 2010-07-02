@@ -7,7 +7,7 @@ import java.io.IOException;
 
 
 /**
- * The simple workspace does not manage available paths, only returns the file handles relative to
+ * The simple workspace doesn't manage available paths, only returns the file handles relative to
  * the workspace root.
  *
  * @author  hp
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class SimpleWorkspace extends AbstractWorkspace {
 
     /**
-     * The simple workspace does not manage available paths, only returns the file handles relative
+     * The simple workspace doesn't manage available paths, only returns the file handles relative
      * to the workspace root.
      */
     public SimpleWorkspace() {

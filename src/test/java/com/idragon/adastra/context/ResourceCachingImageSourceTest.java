@@ -1,4 +1,4 @@
-package com.idragon.adastra.springframework.context;
+package com.idragon.adastra.context;
 
 import org.testng.Assert;
 

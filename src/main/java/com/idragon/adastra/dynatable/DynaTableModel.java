@@ -430,6 +430,8 @@ public class DynaTableModel extends AbstractTableModel {
         }
     }
 
+    // TODO: Historize
+
     /**
      * Property instructions.
      *
